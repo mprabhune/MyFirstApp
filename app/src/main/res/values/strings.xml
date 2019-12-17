@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">CPU Details</string>
+    <string name="app_name">CPUInfo</string>
+    <string name="edit_message">Enter a message</string>
+    <string name="button_send">send</string>
 </resources>
