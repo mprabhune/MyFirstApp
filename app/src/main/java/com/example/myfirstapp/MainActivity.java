@@ -2,6 +2,7 @@ package com.example.myfirstapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,13 +25,22 @@ public class MainActivity extends AppCompatActivity {
 
         button1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
-                textView.setText("your button has been clicked");
+                textView.setText("");
                 textView.setText(getCPUDetails());
             }
         });
+
+        Button button2 = (Button)findViewById(R.id.button2);
+        button2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v){
+                textView.setText("");
+                textView.setText(getRAM());
+            }
+        });
+
     }
 
-    public static String getCPUDetails() {
+    public String getCPUDetails() {
         ProcessBuilder pb;
         String cpuDetails = "";
         String [] Data = {"/system/bin/cat", "/proc/cpuinfo"};
@@ -51,5 +61,19 @@ public class MainActivity extends AppCompatActivity {
         }
         System.out.println(cpuDetails);
         return cpuDetails;
+    }
+
+    public String getRAM() {
+        ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
+        ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        am.getMemoryInfo(mi);
+        double availableMegs = mi.availMem / 0x100000L;
+        System.out.println("memoryinfo"+ mi);
+
+        System.out.println("availableMegs"+ availableMegs);
+        //Percentage can be calculated for API 16+
+        double percentAvail = mi.availMem / (double)mi.totalMem * 100.0;
+        System.out.println("percentAvail"+ percentAvail);
+        return String.valueOf(percentAvail);
     }
 }
