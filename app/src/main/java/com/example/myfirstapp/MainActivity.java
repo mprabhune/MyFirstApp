@@ -3,6 +3,7 @@ package com.example.myfirstapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActivityManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -64,16 +65,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public String getRAM() {
+        Context context = getApplicationContext();
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
-        ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
         am.getMemoryInfo(mi);
-        double availableMegs = mi.availMem / 0x100000L;
-        System.out.println("memoryinfo"+ mi);
+        long totalMemory = mi.totalMem;
+        long availMemory = mi.availMem;
+        double inMB = availMemory / 1048576;
 
-        System.out.println("availableMegs"+ availableMegs);
-        //Percentage can be calculated for API 16+
-        double percentAvail = mi.availMem / (double)mi.totalMem * 100.0;
-        System.out.println("percentAvail"+ percentAvail);
-        return String.valueOf(percentAvail);
+        System.out.println("availableMegs"+ totalMemory);
+        return String.valueOf(inMB);
     }
 }
