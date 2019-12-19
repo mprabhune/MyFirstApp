@@ -49,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
         Process process;
         byte[] bArray;
         bArray = new byte[1024];
+        for(int i=0; i<Data.length; i++) {
+            System.out.print("Data is " + Data[i]);
+        }
         try {
             pb = new ProcessBuilder(Data);
             process = pb.start();
